@@ -19,6 +19,11 @@ class Servo implements Runnable {
 	private int pulseWidth; //in microseconds, the high time of the pulse
 
 	public Servo(String gPIOChannel){
+		this(gPIOChannel, 0);
+	}
+
+	public Servo(String gPIOChannel, int initialAngle){
+		angle = initialAngle;
 		FileWriter unexportFile = null;
 		try{
 			unexportFile= new FileWriter("/sys/class/gpio/unexport");
@@ -85,7 +90,7 @@ class Servo implements Runnable {
 	}
 
 	public synchronized void set_pulseWidth(int newp){
-		if (newp > 1000 && newp < 2000) pulseWidth = newp;
+		if (newp > 1000 && newp < 2000)	angle = newp/PULSE_RATIO;
 	}
 
 	private void tryWriteAndFlush(FileWriter f, String s){
