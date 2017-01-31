@@ -73,7 +73,7 @@ class Servo implements Runnable {
 	}
 
 	public synchronized void set_angle(int newAngle){
-		angle = newAngle;
+		if (angle < 180 && angle > 0) angle = newAngle;
 	}
 
 	public synchronized void inc_angle(){
@@ -82,6 +82,10 @@ class Servo implements Runnable {
 
 	public synchronized void dec_angle(){
 		angle--;
+	}
+
+	public synchronized void set_pulseWidth(int newp){
+		if (newp > 1000 && newp < 2000) pulseWidth = newp;
 	}
 
 	private void tryWriteAndFlush(FileWriter f, String s){
