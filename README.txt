@@ -14,3 +14,5 @@ The UDP receiver interprets packets in this form, and updates the servo
 At the moment, the receiver (which posesses the main) has one servo on GPIO 24.
 
 The UDP receiver listens on port 1077
+
+changed something in the readme
