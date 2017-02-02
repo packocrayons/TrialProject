@@ -7,8 +7,9 @@ The opcode is the first (and maybe only) byte of the packet.
 '1' - Set angle - MUST BE 3 DIGITS
 '2' - Increment angle
 '3' - Decrement angle
-'4' - Set pulseWidth
-'5' - Create a servo? - To be Determined
+'4' - Set angle to 179 degrees
+'5' - Set angle to 0 degrees
+'6' - Print some debug info about pulseWidth
 
 The UDP receiver interprets packets in this form, and updates the servo
 At the moment, the receiver (which posesses the main) has one servo on GPIO 24.

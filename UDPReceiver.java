@@ -7,11 +7,12 @@ Packet Structure:
 ***************OPCODES*****************
 The opcode is the first (and maybe only) byte of the packet.
 '0' - ignore/testing packet
-'1' - Set angle - MUST BE 3 DIGITS
+'1' - Set angle - MUST BE 3 DIGITS - UNTESTED
 '2' - Increment angle
 '3' - Decrement angle
-'4' - Set pulseWidth
-'5' - Create a servo?
+'4' - Set angle to 179 (180 is out of bounds)
+'5' - Set angle to 1 (0 is out of bounds)
+'6' - print some debug info about the servo
 */
 
 public class UDPReceiver {
