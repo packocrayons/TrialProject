@@ -78,7 +78,7 @@ class Servo implements Runnable {
 		long t;
 		FileWriter commandChannel = null;
 		try{
-			commandChannel = new FileWriter("/sys/class/gpio" + channel + "/value");
+			commandChannel = new FileWriter("/sys/class/gpio/gpio" + channel + "/value");
 		} catch (IOException e){
 			System.out.println("Error opening commandChannel : " + e);
 		}
@@ -86,7 +86,9 @@ class Servo implements Runnable {
 			pulseWidth = (angle*PULSE_RATIO) + 1000;
 			tryWriteAndFlush(commandChannel, GPIO_HIGH);
 			t = System.nanoTime();
-			while((System.nanoTime() - t) < (pulseWidth * 1000)); //busy wait, best way to get microsec accuracy
+			while((System.nanoTime() - t) < (pulseWidth * 1000)){
+				//debug remnant brackets //busy wait, best way to get microsec accuracy
+			}
 			tryWriteAndFlush(commandChannel, GPIO_LOW); //send the pin low
 
 			try{
@@ -98,11 +100,17 @@ class Servo implements Runnable {
 
 	}
 
+	public synchronized void print_debug(){
+		System.out.println("angle : " + angle);
+		System.out.println("Pulsewidth : " + pulseWidth);
+	}
+
 	public synchronized void set_angle(int newAngle){
 		if (newAngle < 180 && newAngle > 0) angle = newAngle;
 	}
 
 	public synchronized void inc_angle(){
+		System.out.println("Incrementing angle");
 		angle++;
 	}
 

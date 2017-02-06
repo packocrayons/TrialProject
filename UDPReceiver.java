@@ -7,11 +7,12 @@ Packet Structure:
 ***************OPCODES*****************
 The opcode is the first (and maybe only) byte of the packet.
 '0' - ignore/testing packet
-'1' - Set angle - MUST BE 3 DIGITS
+'1' - Set angle - MUST BE 3 DIGITS - UNTESTED
 '2' - Increment angle
 '3' - Decrement angle
-'4' - Set pulseWidth
-'5' - Create a servo?
+'4' - Set angle to 179 (180 is out of bounds)
+'5' - Set angle to 1 (0 is out of bounds)
+'6' - print some debug info about the servo
 */
 
 public class UDPReceiver {
@@ -37,6 +38,7 @@ public class UDPReceiver {
 	    }
 		
 		Servo s = new Servo("24"); //what the tutorial I saw used as the GPIO pin, not sure what this translates tool
+		new Thread(s).start();
 	    
 	    try
 	    {
@@ -62,7 +64,17 @@ public class UDPReceiver {
 	            	case '0' : break; //drop testing packets
 	            	case '1' : int newAngle = byteArrToInt(Arrays.copyOfRange(data, 0, 3)); //send the first 3 digits to get back an int
 	            	s.set_angle(newAngle);
-	            	//continue adding cases here
+			break;
+			case '2' : s.inc_angle();
+			break;
+			case '3' : s.dec_angle();
+			break;
+			case '4' : s.set_angle(179);
+			break; //FIX THIS CASE - DEBUG/TESTING ONLY
+			case '5' : s.set_angle(1);
+			break; //FIX THIS CASE - DEBUG/TESTING ONLY
+			case '6' : s.print_debug();
+			break;
 	            	default : break;
 	            }
 
